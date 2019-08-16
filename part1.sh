@@ -33,8 +33,8 @@ Description=SafeNodes daemon
 After=network-online.target
 [Service]
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStart=/root/safecoind
-WorkingDirectory=/root/.safecoin
+ExecStart=$HOME/safecoind
+WorkingDirectory=$HOME/.safecoin
 User=root
 KillMode=mixed
 Restart=always

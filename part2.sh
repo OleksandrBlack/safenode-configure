@@ -4,24 +4,19 @@
 #						safekey			parentkey		safepass	safeheight
 # example: ./part2.sh 	02b1...1924		0333b...f9a3	safepass	775000
 
-
 confFile=~/.safecoin/safecoin.conf
-
-
 killall -9 safecoind
 
 cd ~
+
 if [ ! -d ~/.safecoin ]; then
   mkdir .safecoin
 fi
 
 rm $confFile
 
-
 if [ ! -f $confFile ]; then
   touch $confFile
-
-
   #write data
   rpcuser=$(gpw 1 30)
   echo "rpcuser="$rpcuser >> $confFile
@@ -48,25 +43,17 @@ if [ ! -f $confFile ]; then
   if echo $4; then
     echo "safeheight=$4" >> $confFile
   fi
-
-
 fi
-
 
 chmod +x ~/safenode-configure/fetch-params.sh
 
 cd ~
 
-report_asgard_progress 'Fetching params ...' 70
-
 ./safenode-configure/fetch-params.sh
-
 
 wget -N https://github.com/Fair-Exchange/safewallet/releases/download/data/binary_linux.zip -O ~/binary.zip
 unzip -o ~/binary.zip -d ~
 rm ~/binary.zip
-
-
 
 if [ ! -d ~/.safecoin/blocks ]; then
   wget -N https://github.com/Fair-Exchange/safewallet/releases/download/data/blockchain_txindex.zip
@@ -79,11 +66,10 @@ fi
 chmod +x ~/safecoind ~/safecoin-cli
 
 #start
-
-
-
 ./safecoind -daemon > /dev/null
+
 systemctl enable --now safecoinnode.service
+
 sleep 5
 x=1
 echo "Wait for starting"
@@ -109,4 +95,3 @@ while true ; do
     fi
 	rm ~/text.txt
 done
-
